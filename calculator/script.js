@@ -1,7 +1,3 @@
-let prevNumber = "";
-let calculationOperator = "";
-let currentNumber = "0";
-
 const calculatorScreen = document.querySelector(".calculator-layar");
 
 // Fungsi Update Screen
@@ -11,6 +7,10 @@ const updateScreen = number => {
 
 const numbers = document.querySelectorAll(".number");
 // Fungsi event click ke setiap element
+let prevNumber = "";
+let calculationOperator = "";
+let currentNumber = "0";
+
 numbers.forEach(number => {
   number.addEventListener("click", event => {
     inputNumber(event.target.value);
@@ -26,13 +26,19 @@ const inputNumber = number => {
   }
 };
 
+// end
+
 // Menambah click Event ke operator tombol-tombol
+
 const operators = document.querySelectorAll(".operator");
 
 const inputOperator = operator => {
-  prevNumber = currentNumber;
+  if (calculationOperator === "") {
+    prevNumber = currentNumber;
+  }
+
   calculationOperator = operator;
-  currentNumber = "";
+  currentNumber = "0";
 };
 
 operators.forEach(operator => {
@@ -58,16 +64,16 @@ const calculate = () => {
   let result = "";
   switch (calculationOperator) {
     case "+":
-      result = parseInt(prevNumber) + parseInt(currentNumber);
+      result = parseFloat(prevNumber) + parseFloat(currentNumber);
       break;
     case "-":
-      result = parseInt(prevNumber) - parseInt(currentNumber);
+      result = parseFloat(prevNumber) - parseFloat(currentNumber);
       break;
     case "*":
-      result = parseInt(prevNumber) * parseInt(currentNumber);
+      result = parseFloat(prevNumber) * parseFloat(currentNumber);
       break;
     case "/":
-      result = parseInt(prevNumber) / parseInt(currentNumber);
+      result = parseFloat(prevNumber) / parseFloat(currentNumber);
       break;
     default:
       return;
@@ -89,6 +95,22 @@ const clearAll = () => {
 };
 
 clearBtn.addEventListener("click", () => {
-  clearAll;
+  clearAll();
+  updateScreen(currentNumber);
+});
+//  end fungsi
+
+// fungsi decimal
+const decimal = document.querySelector(".decimal");
+
+inputDecimal = dot => {
+  if (currentNumber.includes(".")) {
+    return;
+  }
+  currentNumber += dot;
+};
+
+decimal.addEventListener("click", event => {
+  inputDecimal(event.target.value);
   updateScreen(currentNumber);
 });
