@@ -18,10 +18,6 @@ numbers.forEach(number => {
   });
 });
 
-const inputNUmber = number => {
-  currentNumber += number;
-};
-
 const inputNumber = number => {
   if (currentNumber === "0") {
     currentNumber = number;
@@ -51,9 +47,48 @@ operators.forEach(operator => {
 const equalSign = document.querySelector(".equal-sign");
 
 equalSign.addEventListener("click", () => {
-  console.log("Equal button is pressed");
+  calculate();
+  updateScreen(currentNumber);
 });
 
 // End Menambah click Event ke TOmbol sama dnegan =
 
 // Fungsi calculator
+const calculate = () => {
+  let result = "";
+  switch (calculationOperator) {
+    case "+":
+      result = parseInt(prevNumber) + parseInt(currentNumber);
+      break;
+    case "-":
+      result = parseInt(prevNumber) - parseInt(currentNumber);
+      break;
+    case "*":
+      result = parseInt(prevNumber) * parseInt(currentNumber);
+      break;
+    case "/":
+      result = parseInt(prevNumber) / parseInt(currentNumber);
+      break;
+    default:
+      return;
+  }
+  currentNumber = result;
+  calculationOperator = "";
+};
+
+// End Fungsi calculator
+
+// Fungsi AC atau All Clear
+
+const clearBtn = document.querySelector(".all-clear");
+
+const clearAll = () => {
+  prevNumber = "";
+  calculationOperator = "";
+  currentNumber = "0";
+};
+
+clearBtn.addEventListener("click", () => {
+  clearAll;
+  updateScreen(currentNumber);
+});
